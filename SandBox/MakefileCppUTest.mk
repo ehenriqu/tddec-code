@@ -15,6 +15,7 @@ CPP_PLATFORM = Gcc
 
 SRC_DIRS = \
 	$(PROJECT_HOME_DIR)/src/LedDriver \
+	$(PROJECT_HOME_DIR)/src/CircularBuffer \
 
 TEST_SRC_DIRS = \
 	tests\
@@ -24,6 +25,7 @@ INCLUDE_DIRS =\
   .\
   $(CPPUTEST_HOME)/include\
   $(PROJECT_HOME_DIR)/include/LedDriver\
+  $(PROJECT_HOME_DIR)/include/CircularBuffer\
 
 include ../CppUTestCompileFlags.mk
 include $(CPPUTEST_HOME)/build/MakefileWorker.mk
