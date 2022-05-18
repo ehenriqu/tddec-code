@@ -30,3 +30,42 @@ TEST(CircularBuffer, Create)
 //  FAIL("Start here");
 }
 
+TEST(CircularBuffer, AddItem)
+{
+//  FAIL("Start here");
+}
+
+TEST(CircularBuffer, RemoveItem)
+{
+//  FAIL("Start here");
+}
+
+TEST(CircularBuffer, CheckIsEmpty)
+{
+//  FAIL("Start here");
+}
+
+TEST(CircularBuffer, CheckIsFull)
+{
+//  FAIL("Start here");
+}
+
+TEST(CircularBuffer, AddItemToFullBuffer)
+{
+//  FAIL("Start here");
+}
+
+TEST(CircularBuffer, RemoveItemFromEmptyBuffer)
+{
+//  FAIL("Start here");
+}
+
+TEST(CircularBuffer, AddInteger)
+{
+//  FAIL("Start here");
+}
+
+TEST(CircularBuffer, AddNonInteger)
+{
+//  FAIL("Start here");
+}
