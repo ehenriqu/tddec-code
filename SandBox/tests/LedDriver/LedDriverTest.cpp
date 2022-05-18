@@ -23,21 +23,39 @@ extern "C"
 
 #include "CppUTest/TestHarness.h"
 
+#define BITMASK_ALL_LEDS  (0xffff)
+
+static uint16_t virtualLeds;
+
 TEST_GROUP(LedDriver)
 {
     void setup()
     {
-      LedDriver_Create();
+      LedDriver_Create(&virtualLeds);
     }
 
     void teardown()
     {
-       LedDriver_Destroy();
+      //LedDriver_Destroy();
     }
 };
 
-TEST(LedDriver, Create)
+TEST(LedDriver, LedsOffAfterCreate)
 {
-//  FAIL("Start here");
+  uint16_t virtualLeds = 0xffff;
+  LedDriver_Create(&virtualLeds);
+  BITS_EQUAL(0, virtualLeds, BITMASK_ALL_LEDS);
 }
 
+TEST(LedDriver, TurnOnLedOne)
+{
+  LedDriver_TurnOn(1);
+  BITS_EQUAL(1, virtualLeds, BITMASK_ALL_LEDS);
+}
+
+TEST(LedDriver, TurnOffLedOne)
+{
+  LedDriver_TurnOn(1);
+  LedDriver_TurnOff(1);
+  BITS_EQUAL(0, virtualLeds, BITMASK_ALL_LEDS);
+}
