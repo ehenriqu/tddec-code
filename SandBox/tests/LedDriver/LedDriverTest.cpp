@@ -113,3 +113,8 @@ TEST(LedDriver, OutOfBoundsTurnOffDoesNoHarm)
   BITS_EQUAL(0xffff, virtualLeds, BITMASK_ALL_LEDS);
 }
 
+IGNORE_TEST(LedDriver, OutOfBoundsProducesRuntimeError)
+{
+  /* TODO: Figure out how to include the RuntimeError files (utils and mocks)*/
+  /*      in this sandbox                                                    */
+}
