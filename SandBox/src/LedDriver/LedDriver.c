@@ -34,6 +34,11 @@ enum
     ALL_LEDS_OFF = ~ALL_LEDS_ON
 };
 
+enum{
+    FIRST_LED = 1,
+    LAST_LED = 16
+};
+
 static uint16_t *ledsAddress;
 static uint16_t ledsImage;
 
@@ -45,6 +50,21 @@ static uint16_t convertLedNumberToBit(int LedNumber)
 static void updateHardware(void)
 {
     *ledsAddress = ledsImage;
+}
+
+static BOOL isLedOutOfBounds(int LedNumber)
+{
+    return (LedNumber < FIRST_LED || LedNumber > LAST_LED);
+}
+
+static void setLedImageBit(int LedNumber)
+{
+    ledsImage |= convertLedNumberToBit(LedNumber);
+}
+
+static void clearLedImageBit(int LedNumber)
+{
+    ledsImage &= ~(convertLedNumberToBit(LedNumber));
 }
 
 void LedDriver_Create(uint16_t *address)
@@ -60,19 +80,19 @@ void LedDriver_Destroy(void)
 
 void LedDriver_TurnOn(int ledNumber)
 {
-    if (ledNumber <= 0 || ledNumber > 16)
+    if (isLedOutOfBounds(ledNumber))
         return;
     
-    ledsImage |= convertLedNumberToBit(ledNumber);
+    setLedImageBit(ledNumber);
     updateHardware();
 }
 
 void LedDriver_TurnOff(int ledNumber)
 {
-    if (ledNumber <= 0 || ledNumber > 16)
+    if (isLedOutOfBounds(ledNumber))
         return;
     
-    ledsImage &= ~(convertLedNumberToBit(ledNumber));
+    clearLedImageBit(ledNumber);
     updateHardware();
 }
 
