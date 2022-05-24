@@ -118,3 +118,40 @@ IGNORE_TEST(LedDriver, OutOfBoundsProducesRuntimeError)
   /* TODO: Figure out how to include the RuntimeError files (utils and mocks)*/
   /*      in this sandbox                                                    */
 }
+
+TEST(LedDriver, IsOn)
+{
+  CHECK_FALSE(LedDriver_IsOn(11));
+  LedDriver_TurnOn(11);
+  CHECK_TRUE(LedDriver_IsOn(11));
+}
+
+TEST(LedDriver,OutOfBoundsLedAlwaysOff)
+{
+  CHECK_TRUE(LedDriver_IsOff(0));
+  CHECK_TRUE(LedDriver_IsOff(17));
+  CHECK_FALSE(LedDriver_IsOn(0));
+  CHECK_FALSE(LedDriver_IsOn(17));
+}
+
+TEST(LedDriver, IsOff)
+{
+  CHECK_TRUE(LedDriver_IsOff(11));
+  LedDriver_TurnOn(11);
+  CHECK_FALSE(LedDriver_IsOff(11));
+}
+
+TEST(LedDriver, TurnOffMultipleLeds)
+{
+  LedDriver_TurnAllOn();
+  LedDriver_TurnOff(9);
+  LedDriver_TurnOff(8);
+  BITS_EQUAL(~(0x180&0xffff), virtualLeds, BITMASK_ALL_LEDS);
+}
+
+TEST(LedDriver, TurnAllOff)
+{
+  LedDriver_TurnAllOn();
+  LedDriver_TurnAllOff();
+  BITS_EQUAL(0, virtualLeds, BITMASK_ALL_LEDS);
+}
