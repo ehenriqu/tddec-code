@@ -12,12 +12,14 @@ static int* buffer;
 static int  capacity;
 static int  size;
 static int  head;
+static int  tail;
 
 void CircularBuffer_Create(int bufferSize)
 {
     capacity = bufferSize;
     size = 0;   // Empty buffer
     head = 0;   // Initial index
+    tail = 0;   // Initial index
     buffer = (int*) malloc(capacity * sizeof(int));
 }
 
@@ -51,7 +53,7 @@ int CircularBuffer_Read(void)
 int CircularBuffer_Remove(void)
 {
     size--;
-    return buffer[--head];
+    return buffer[tail++];
 }
 
 void CircularBuffer_Add(int item)

@@ -89,7 +89,7 @@ TEST(CircularBuffer, AddMultipleItems)
   CHECK_EQUAL(expectedSize, actual);
 }
 
-TEST(CircularBuffer, AddItemAndRead)
+TEST(CircularBuffer, AddItemAndReadHead)
 {
   int readValue;
   CircularBuffer_Add(1);
