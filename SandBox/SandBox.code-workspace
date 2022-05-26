@@ -6,7 +6,10 @@
 	],
 	"settings": {
 		"files.associations": {
-			"circularbuffer.h": "c"
+			"circularbuffer.h": "c",
+			"leddriver.h": "c",
+			"*.tcc": "c",
+			"cstdlib": "c"
 		}
 	}
 }

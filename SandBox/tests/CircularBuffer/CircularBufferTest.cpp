@@ -12,28 +12,41 @@ extern "C"
 
 #include "CppUTest/TestHarness.h"
 
-static const int capacity = 10;
+static const int setupCapacity = 10;
 
 TEST_GROUP(CircularBuffer)
 {
     void setup()
     {
-      CircularBuffer_Create(capacity);
+      CircularBuffer_Create(setupCapacity);
     }
 
     void teardown()
     {
-      //CircularBuffer_Destroy();
+      CircularBuffer_Destroy();
     }
 };
 
+IGNORE_TEST(CircularBuffer, Destroy)
+{
+  // int actual;
+  // actual = CircularBuffer_GetCapacity();
+  // CHECK_EQUAL(setupCapacity,actual);
+
+  // CircularBuffer_Destroy(); // Destroy anything created by the setup function
+  // actual = CircularBuffer_GetCapacity();
+  // CHECK_EQUAL(0,actual);
+}
+
 TEST(CircularBuffer, Create)
 {
-  const int capacity = 10;
-  int actualCapacity;
+  const int capacity = 5;
+  int actual;
+  CircularBuffer_Destroy(); // Destroy anything created by the setup function
+  
   CircularBuffer_Create(capacity);
-  actualCapacity = CircularBuffer_GetCapacity();
-  CHECK_EQUAL(capacity, actualCapacity);
+  actual = CircularBuffer_GetCapacity();
+  CHECK_EQUAL(capacity, actual);
 }
 
 TEST(CircularBuffer, ReadEmptyBuffer)
@@ -73,9 +86,41 @@ TEST(CircularBuffer, RemoveItemAndReadEmptyBuffer)
   CHECK_EQUAL(expectedReadValue, readValue);
 }
 
+TEST(CircularBuffer, GetSizeOfEmptyBuffer)
+{
+  int expectedSize = 0;
+  int actual = CircularBuffer_GetSize();
+  CHECK_EQUAL(expectedSize, actual);
+}
+
+TEST(CircularBuffer, AddMultipleItems)
+{
+  const int item = 1;
+  int expectedSize, actual;
+
+  CircularBuffer_Add(item);
+  expectedSize = 1;
+  actual = CircularBuffer_GetSize();
+  CHECK_EQUAL(expectedSize, actual);
+
+  CircularBuffer_Add(item);
+  expectedSize = 2;
+  actual = CircularBuffer_GetSize();
+  CHECK_EQUAL(expectedSize, actual);
+}
+
 TEST(CircularBuffer, CheckIsEmpty)
 {
-//  FAIL("Start here");
+  // const int item = 1;
+  // BOOL actual;
+  // BOOL expected = TRUE;
+  // actual = CircularBuffer_IsEmpty();
+  // CHECK_EQUAL(expected, actual);
+
+  // CircularBuffer_Add(item);
+  // expected = FALSE;
+  // actual = CircularBuffer_IsEmpty();
+  // CHECK_EQUAL(expected, actual);
 }
 
 TEST(CircularBuffer, CheckIsFull)
