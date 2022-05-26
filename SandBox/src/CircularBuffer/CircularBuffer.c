@@ -11,11 +11,13 @@
 static int* buffer;
 static int  capacity;
 static int  size;
+static int  head;
 
 void CircularBuffer_Create(int bufferSize)
 {
     capacity = bufferSize;
     size = 0;   // Empty buffer
+    head = 0;   // Initial index
     buffer = (int*) malloc(capacity * sizeof(int));
 }
 
@@ -42,25 +44,28 @@ int CircularBuffer_Read(void)
     }
     else
     {
-        return buffer[0];
+        return buffer[head-1];
     }
 }
 
 int CircularBuffer_Remove(void)
 {
-    int retVal;
-    retVal = buffer[0];
-    buffer[0] = 0;
-    return retVal;   
+    size--;
+    return buffer[--head];
 }
 
 void CircularBuffer_Add(int item)
 {
-    buffer[0] = item;
     size++;
+    buffer[head++] = item;
 }
 
 BOOL CircularBuffer_IsEmpty(void)
 {
-    return TRUE;
+    return (size == 0);
+}
+
+BOOL CircularBuffer_IsFull(void)
+{
+    return (size == capacity);
 }

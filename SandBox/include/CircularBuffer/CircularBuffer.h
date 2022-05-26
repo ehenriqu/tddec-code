@@ -22,5 +22,6 @@ int CircularBuffer_Remove(void);
 
 /* Check state */
 BOOL CircularBuffer_IsEmpty(void);
+BOOL CircularBuffer_IsFull(void);
 
 #endif  /* D_CircularBuffer_H */

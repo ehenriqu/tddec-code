@@ -64,22 +64,13 @@ TEST(CircularBuffer, ReadEmptyBuffer)
   CHECK_EQUAL(expected, actual);
 }
 
-TEST(CircularBuffer, AddItemAndRead)
+TEST(CircularBuffer, AddItem)
 {
   const int item = 1;
-  int readValue;
+  int actual;
   CircularBuffer_Add(item);
-  readValue = CircularBuffer_Read();
-  CHECK_EQUAL(item, readValue);
-}
-
-TEST(CircularBuffer, RemoveItem)
-{
-  const int item = 1;
-  int removedValue;
-  CircularBuffer_Add(item);
-  removedValue = CircularBuffer_Remove();
-  CHECK_EQUAL(item, removedValue);
+  actual = CircularBuffer_GetSize();
+  CHECK_EQUAL(1, actual);
 }
 
 TEST(CircularBuffer, AddMultipleItems)
@@ -98,23 +89,62 @@ TEST(CircularBuffer, AddMultipleItems)
   CHECK_EQUAL(expectedSize, actual);
 }
 
+TEST(CircularBuffer, AddItemAndRead)
+{
+  int readValue;
+  CircularBuffer_Add(1);
+  readValue = CircularBuffer_Read();
+  CHECK_EQUAL(1, readValue);
+}
+
+TEST(CircularBuffer, RemoveItem)
+{
+  const int item = 1;
+  int removedValue, actual;
+  CircularBuffer_Add(item);
+  removedValue = CircularBuffer_Remove();
+  CHECK_EQUAL(item, removedValue);
+  actual = CircularBuffer_GetSize();
+  CHECK_EQUAL(0, actual);
+}
+
+TEST(CircularBuffer, AddAndRemoveItemsAndReadHead)
+{
+  int actual;
+  CircularBuffer_Add(1);
+  CircularBuffer_Add(2);
+  CircularBuffer_Add(3);
+  CircularBuffer_Remove();
+  actual = CircularBuffer_Read();
+  CHECK_EQUAL(2, actual);
+}
+
 TEST(CircularBuffer, CheckIsEmpty)
 {
-  // const int item = 1;
-  // BOOL actual;
-  // BOOL expected = TRUE;
-  // actual = CircularBuffer_IsEmpty();
-  // CHECK_EQUAL(expected, actual);
+  BOOL actual;
+  actual = CircularBuffer_IsEmpty();
+  CHECK_EQUAL(TRUE, actual);
 
-  // CircularBuffer_Add(item);
-  // expected = FALSE;
-  // actual = CircularBuffer_IsEmpty();
-  // CHECK_EQUAL(expected, actual);
+  CircularBuffer_Add(1);
+  actual = CircularBuffer_IsEmpty();
+  CHECK_EQUAL(FALSE, actual);
 }
 
 TEST(CircularBuffer, CheckIsFull)
 {
-//  FAIL("Start here");
+  BOOL actual;
+
+  // Create a circular buffer with capacity of 1
+  CircularBuffer_Destroy(); // Destroy anything created by the setup function 
+  CircularBuffer_Create(1);
+  CHECK_EQUAL(1, CircularBuffer_GetCapacity());
+
+  actual = CircularBuffer_IsFull();
+  CHECK_EQUAL(FALSE, actual);
+
+  CircularBuffer_Add(1);
+  actual = CircularBuffer_IsFull();
+  CHECK_EQUAL(TRUE, actual);
 }
 
 TEST(CircularBuffer, AddItemToFullBuffer)
