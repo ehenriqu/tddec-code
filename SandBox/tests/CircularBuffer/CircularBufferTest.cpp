@@ -115,8 +115,9 @@ TEST(CircularBuffer, AddAndRemoveItemsAndReadHead)
   CircularBuffer_Add(2);
   CircularBuffer_Add(3);
   CircularBuffer_Remove();
+  CircularBuffer_Remove();
   actual = CircularBuffer_Read();
-  CHECK_EQUAL(2, actual);
+  CHECK_EQUAL(3, actual);
 }
 
 TEST(CircularBuffer, CheckIsEmpty)
