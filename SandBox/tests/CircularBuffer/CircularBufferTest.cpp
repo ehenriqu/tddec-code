@@ -29,13 +29,13 @@ TEST_GROUP(CircularBuffer)
 
 IGNORE_TEST(CircularBuffer, Destroy)
 {
-  // int actual;
-  // actual = CircularBuffer_GetCapacity();
-  // CHECK_EQUAL(setupCapacity,actual);
+  int actual;
+  actual = CircularBuffer_GetCapacity();
+  CHECK_EQUAL(setupCapacity,actual);
 
-  // CircularBuffer_Destroy(); // Destroy anything created by the setup function
-  // actual = CircularBuffer_GetCapacity();
-  // CHECK_EQUAL(0,actual);
+  CircularBuffer_Destroy(); // Destroy anything created by the setup function
+  actual = CircularBuffer_GetCapacity();
+  CHECK_EQUAL(0,actual);
 }
 
 TEST(CircularBuffer, Create)
@@ -47,6 +47,13 @@ TEST(CircularBuffer, Create)
   CircularBuffer_Create(capacity);
   actual = CircularBuffer_GetCapacity();
   CHECK_EQUAL(capacity, actual);
+}
+
+TEST(CircularBuffer, GetSizeOfEmptyBuffer)
+{
+  int expectedSize = 0;
+  int actual = CircularBuffer_GetSize();
+  CHECK_EQUAL(expectedSize, actual);
 }
 
 TEST(CircularBuffer, ReadEmptyBuffer)
@@ -73,24 +80,6 @@ TEST(CircularBuffer, RemoveItem)
   CircularBuffer_Add(item);
   removedValue = CircularBuffer_Remove();
   CHECK_EQUAL(item, removedValue);
-}
-
-TEST(CircularBuffer, RemoveItemAndReadEmptyBuffer)
-{
-  const int item = 1;
-  int readValue;
-  int expectedReadValue = 0;
-  CircularBuffer_Add(item);
-  CircularBuffer_Remove();
-  readValue = CircularBuffer_Read();
-  CHECK_EQUAL(expectedReadValue, readValue);
-}
-
-TEST(CircularBuffer, GetSizeOfEmptyBuffer)
-{
-  int expectedSize = 0;
-  int actual = CircularBuffer_GetSize();
-  CHECK_EQUAL(expectedSize, actual);
 }
 
 TEST(CircularBuffer, AddMultipleItems)
